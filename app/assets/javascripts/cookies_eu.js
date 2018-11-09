@@ -6,9 +6,15 @@ var windowIsTurbolinked = 'Turbolinks' in window;
 var cookiesEu = {
   init: function() {
     var cookiesEuOKButton = document.querySelector('.js-cookies-eu-ok');
+    var cookiesEuDeclineButton = document.querySelector('.js-cookies-eu-decline');
 
     if (cookiesEuOKButton) {
       this.addListener(cookiesEuOKButton);
+      // clear turbolinks cache so cookie banner does not reappear
+      windowIsTurbolinked && window.Turbolinks.clearCache();
+    }
+    if (cookiesEuDeclineButton) {
+      this.addListener(cookiesEuDeclineButton);
       // clear turbolinks cache so cookie banner does not reappear
       windowIsTurbolinked && window.Turbolinks.clearCache();
     }
@@ -24,8 +30,9 @@ var cookiesEu = {
   },
 
   setCookie: function() {
-    Cookies.set('cookie_eu_consented', true, { path: '/', expires: 365 });
-
+    if (this.classList.value.includes('cookies-eu-ok')) {
+      Cookies.set('cookie_eu_consented', true, { path: '/', expires: 365 });
+    }
     var container = document.querySelector('.js-cookies-eu');
     container.parentNode.removeChild(container);
   }
