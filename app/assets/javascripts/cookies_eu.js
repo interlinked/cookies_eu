@@ -32,7 +32,7 @@ var cookiesEu = {
   setCookie: function() {
     if (this.classList.value.includes('cookies-eu-ok')) {
       Cookies.set('cookie_eu_consented', true, { path: '/', expires: 365 });
-      location.reload();
+      // location.reload();
     }
     var container = document.querySelector('.js-cookies-eu');
     container.parentNode.removeChild(container);
